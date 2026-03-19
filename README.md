@@ -1,4 +1,4 @@
-# uncertainty-aware-rag
+# Uncertainty aware RAG
 
 ## Overview
 
