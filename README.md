@@ -179,6 +179,15 @@ Senior Data Scientist
 
 ---
 
+## Inspiration
+
+This project is inspired by ongoing research and industry work on:
+- Retrieval-Augmented Generation (RAG)
+- Uncertainty estimation in machine learning
+- Techniques for reducing hallucinations in LLM systems
+
+---
+
 ## License
 
 MIT License
