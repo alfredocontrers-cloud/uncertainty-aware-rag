@@ -1,4 +1,4 @@
-# Uncertainty aware RAG
+# uncertainty-aware-rag
 
 ## Overview
 
@@ -6,7 +6,16 @@ This project is a proof of concept for an **uncertainty-aware Retrieval-Augmente
 
 The goal is to reduce hallucinations in LLM-based question answering by introducing a lightweight uncertainty layer on top of a standard RAG pipeline.
 
-Instead of always returning an answer, the system evaluates how reliable that answer is using multiple signals and adapts its response accordingly.
+In addition to the core AI workflow, the project is also designed as a hands-on learning exercise in **cloud infrastructure, vector database deployment, and end-to-end system design**.
+
+---
+
+## Project goals
+
+* Explore practical techniques for reducing hallucinations using uncertainty estimation
+* Build a modular and extensible RAG pipeline
+* Gain hands-on experience deploying AI systems and retrieval infrastructure
+* Compare baseline vs uncertainty-aware system behavior
 
 ---
 
@@ -18,7 +27,7 @@ Traditional RAG systems improve LLM responses by grounding them in retrieved doc
 * The model overgeneralizes from partial evidence
 * The answer is not fully supported by context
 
-This project explores how to make AI systems **more trustworthy** by detecting low-confidence situations and responding safely.
+This project explores how to make AI systems **more trustworthy and production-aware** by detecting low-confidence situations and responding safely.
 
 ---
 
@@ -42,10 +51,7 @@ Based on these signals, the system can:
 
 Query → Retrieval → Generation → Uncertainty Layer → Decision
 
-1. Retrieve relevant document chunks
-2. Generate an answer using an LLM
-3. Estimate uncertainty using multiple signals
-4. Apply a decision policy based on confidence
+This architecture is designed to evolve from a local prototype into a cloud-based system, where document storage, vector retrieval, and evaluation components can be deployed and scaled independently.
 
 ---
 
@@ -55,7 +61,9 @@ Query → Retrieval → Generation → Uncertainty Layer → Decision
 * Modular uncertainty scoring system
 * Confidence-aware decision layer
 * Fallback mechanisms for low-confidence answers
+* Configurable retrieval backend (e.g. Chroma, future support for others)
 * Evaluation framework for comparing system behavior
+* Designed for local and cloud deployment
 
 ---
 
@@ -79,63 +87,40 @@ Query → Retrieval → Generation → Uncertainty Layer → Decision
 
 ## Tech stack
 
+### Core
+
 * Python 3.11+
 * LLM API (e.g. OpenAI)
-* Vector store (FAISS / Elasticsearch)
-* Embeddings (OpenAI / Sentence Transformers)
-* Pandas / NumPy for evaluation
-* Optional: Streamlit for demo UI
+* Embeddings (OpenAI or Sentence Transformers)
+* Vector database (initially Chroma, with possible future support for other backends)
+* Pandas / NumPy / Matplotlib for evaluation
+
+### Infrastructure
+
+* Docker
+* Cloud object storage for documents and outputs
+* Cloud deployment target (AWS or GCP)
+* Optional: Streamlit or API layer for demo access
 
 ---
 
 ## Getting started
 
-### 1. Clone the repository
+This project is currently under active development.
 
-```bash
-git clone https://github.com/your-username/uncertainty-aware-rag.git
-cd uncertainty-aware-rag
-```
+Planned setup includes:
 
-### 2. Set up environment
-
-```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-```
-
-### 3. Configure environment variables
-
-Create a `.env` file:
-
-```bash
-OPENAI_API_KEY=your_api_key_here
-```
-
-### 4. Run the pipeline
-
-```bash
-python -m uncertainty_aware_rag.main
-```
-
----
-
-## Evaluation (work in progress)
-
-The system will be evaluated by comparing:
-
-* Accuracy
-* Hallucination rate
-* Safe abstention rate
-
-Baseline RAG vs uncertainty-aware RAG will be analyzed to understand trade-offs between correctness and reliability.
+1. Document ingestion and chunking
+2. Baseline RAG pipeline
+3. Uncertainty scoring layer
+4. Evaluation and comparison
+5. Optional cloud deployment
 
 ---
 
 ## Project structure
 
-```
+```text
 src/
   uncertainty_aware_rag/
     ingestion/
@@ -143,32 +128,51 @@ src/
     generation/
     uncertainty/
     evaluation/
-```
 
-Detailed design and implementation notes are available in the `docs/` folder.
+docs/
+  design.md
+  plan.md
+
+infra/
+  docker/
+  terraform/
+```
 
 ---
 
 ## Roadmap
 
 * [x] Project setup
-* [ ] Baseline RAG implementation
+* [ ] Baseline local RAG pipeline
 * [ ] Retrieval confidence scoring
 * [ ] Answer consistency module
 * [ ] Grounding verification
 * [ ] Decision layer
 * [ ] Evaluation pipeline
+* [ ] Containerized deployment
+* [ ] Cloud deployment (AWS or GCP)
 * [ ] Demo interface
 
 ---
 
 ## Future work
 
-* Multi-view retrieval (semantic + keyword)
+* Support for multiple vector backends (e.g. Weaviate, OpenSearch)
+* Hybrid retrieval (semantic + keyword search)
 * Calibration of uncertainty scores
-* Integration with local/open-source models
-* Advanced evaluation benchmarks
-* Production-ready API layer
+* Experiment tracking and evaluation dashboards
+* API-based serving layer
+* Integration with local/open-source LLMs
+
+---
+
+## Inspiration
+
+This project is inspired by ongoing research and industry work on:
+
+* Retrieval-Augmented Generation (RAG)
+* Uncertainty estimation in machine learning
+* Techniques for reducing hallucinations in LLM systems
 
 ---
 
@@ -176,15 +180,6 @@ Detailed design and implementation notes are available in the `docs/` folder.
 
 Luis Alfredo Contreras
 Senior Data Scientist
-
----
-
-## Inspiration
-
-This project is inspired by ongoing research and industry work on:
-- Retrieval-Augmented Generation (RAG)
-- Uncertainty estimation in machine learning
-- Techniques for reducing hallucinations in LLM systems
 
 ---
 
